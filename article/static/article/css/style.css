@@ -1,0 +1,16 @@
+/* Sticky footer styles
+-------------------------------------------------- */
+
+.myfooter {
+  position: absolute;
+  bottom: 5px;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  background-color: #f5f5f5;
+  text-align: center;
+}
+
+.navbar {
+  top: 5px;
+}
