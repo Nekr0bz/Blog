@@ -1,6 +1,8 @@
 from django.utils import timezone
 from django.db import models
 
+display_text = lambda text, l: text if len(text) <= l else text[:l]+'...'
+
 class Article (models.Model):
     class Meta:
         db_table = 'article'
@@ -12,8 +14,12 @@ class Article (models.Model):
     article_dislikes = models.IntegerField('Количество дизлайков', default=0)
 
     def __str__(self):
-        text = self.article_title
-        return text if len(text) <= 50 else text[:50]+'...'
+        return display_text(self.article_title, 50)
+
+    def view_article_text(self):
+        return display_text(self.article_text, 300)
+
+
 
 
 class Comments (models.Model):

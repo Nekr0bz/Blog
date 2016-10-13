@@ -1,0 +1,17 @@
+{% extends 'article/main.html' %}
+
+{% block content %}
+    {% for article in articles %}
+        <a href="#" class="article">
+            <div class="article-header">
+                <time class="article-header" datetime="{{ article.article_datetime }}">
+                    {{ article.article_datetime }}
+                </time>
+            </div>
+            <div>
+                <h2 class="article-content">{{ article }}</h2>
+                <p class="article-content">{{ article.view_article_text}}</p>
+            </div>
+        </a>
+    {% endfor %}
+{% endblock %}
