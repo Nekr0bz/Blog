@@ -25,10 +25,8 @@ a.navbar-brand{
 }
 
 a.article{
-    border-bottom: 1px dotted #7c949f;
     display: flex;
     flex-wrap: wrap;
-    padding-bottom: 30px;
     padding-top: 25px;
     position: relative;
     color: #1565c0;
@@ -42,6 +40,12 @@ a.article{
     -webkit-font-smoothing: antialiased;
     font-size: 100%;
     background: 0 0;*/
+}
+
+div.article{
+    border-bottom: 1px dotted #7c949f;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
 }
 
 time.article-header{
@@ -129,6 +133,17 @@ hr.article-detail{
     background-image: linear-gradient(to right, #ccc, #333, #ccc);
     margin-bottom: 30px;
 }
+div.article-footer {
+    margin-top: 10px;
+}
+div.article-footer a{
+    text-decoration: none;
+}
+
+div.comment{
+    border-bottom: 1px dotted #7c949f;
+    margin-bottom: 20px;
+}
 
 time.comment-header{
     font-family: Roboto,sans-serif;
@@ -145,10 +160,7 @@ div.comment-header{
     margin-bottom: 10px;
 }
 
-div.comment{
-    border-bottom: 1px dotted #7c949f;
-    margin-bottom: 20px;
-}
+
 
 
 

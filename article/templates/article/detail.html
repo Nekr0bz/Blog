@@ -1,15 +1,29 @@
 {% extends 'article/main.html' %}
-
+{% load staticfiles %}
 {% block content %}
     <div class="container article-detail">
-        <div class="article-header ">
-            <time class="article-header" datetime="{{ article.article_datetime }}">
-                {{ article.article_datetime }}
-            </time>
-        </div>
-        <div>
-            <h2 class="article-content">{{ article.article_title }}</h2>
-            <p class="article-content">{{ article.article_text}}</p>
+        <div class="article-detail">
+            <div class="article-header ">
+                <time class="article-header" datetime="{{ article.article_datetime }}">
+                    {{ article.article_datetime }}
+                </time>
+            </div>
+            <div>
+                <h2 class="article-content">{{ article.article_title }}</h2>
+                <p class="article-content">{{ article.article_text}}</p>
+            </div>
+            <div class="article-footer">
+                <p>
+                    <a href="{% url 'article:article_add_like' article.id %}">
+                        <img src="{% static 'article/img/like.png' %}" width="25px" height="22">
+                        {{ article.article_likes }}
+                    </a>
+                    <a href="{% url 'article:article_add_dislike' article.id %}">
+                        <img src="{% static 'article/img/dislike.png' %}" width="25px" height="22">
+                        {{ article.article_dislikes }}
+                    </a>
+                </p>
+            </div>
             <hr class="article-detail">
         </div>
         {% for comment in article.comments_set.all %}
@@ -20,6 +34,18 @@
                     </time>
                 </div>
                 <p>{{ comment.comments_text }}</p>
+                <div class="article-footer">
+                    <p>
+                        <a href="{% url 'article:comment_add_like' comment.id %}">
+                            <img src="{% static 'article/img/like.png' %}" width="25px" height="22">
+                            {{ comment.comments_likes }}
+                        </a>
+                        <a href="{% url 'article:comment_add_dislike' comment.id %}">
+                            <img src="{% static 'article/img/dislike.png' %}" width="25px" height="22">
+                            {{ comment.comments_dislikes }}
+                        </a>
+                    </p>
+                </div>
             </div>
         {% endfor %}
     </div>

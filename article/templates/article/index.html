@@ -1,19 +1,33 @@
 {% extends 'article/main.html' %}
-
+{% load staticfiles %}
 {% block content %}
     <div class="container">
         {% for article in articles %}
-            <a href="{% url 'article:detail' article.id %}" class="article">
-                <div class="article-header">
-                    <time class="article-header" datetime="{{ article.article_datetime }}">
-                        {{ article.article_datetime }}
-                    </time>
+            <div class="article">
+                <a href="{% url 'article:detail' article.id %}" class="article">
+                    <div class="article-header">
+                        <time class="article-header" datetime="{{ article.article_datetime }}">
+                            {{ article.article_datetime }}
+                        </time>
+                    </div>
+                    <div>
+                        <h2 class="article-content">{{ article }}</h2>
+                        <p class="article-content">{{ article.view_article_text}}</p>
+                    </div>
+                </a>
+                <div class="article-footer">
+                    <p>
+                        <a href="{% url 'article:article_add_like' article.id  %}">
+                            <img src="{% static 'article/img/like.png' %}" width="25px" height="22">
+                            {{ article.article_likes }}
+                        </a>
+                        <a href="{% url 'article:article_add_dislike' article.id %}">
+                            <img src="{% static 'article/img/dislike.png' %}" width="25px" height="22">
+                            {{ article.article_dislikes }}
+                        </a>
+                    </p>
                 </div>
-                <div>
-                    <h2 class="article-content">{{ article }}</h2>
-                    <p class="article-content">{{ article.view_article_text}}</p>
-                </div>
-            </a>
+            </div>
         {% endfor %}
     </div>
 {% endblock %}
