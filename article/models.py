@@ -19,7 +19,7 @@ class Article (models.Model):
     def view_article_text(self):
         return display_text(self.article_text, 300)
 
-
+    #TODO: article_text не меньше 350 символов!
 
 
 class Comments (models.Model):

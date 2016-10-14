@@ -1,0 +1,26 @@
+{% extends 'article/main.html' %}
+
+{% block content %}
+    <div class="container article-detail">
+        <div class="article-header ">
+            <time class="article-header" datetime="{{ article.article_datetime }}">
+                {{ article.article_datetime }}
+            </time>
+        </div>
+        <div>
+            <h2 class="article-content">{{ article.article_title }}</h2>
+            <p class="article-content">{{ article.article_text}}</p>
+            <hr class="article-detail">
+        </div>
+        {% for comment in article.comments_set.all %}
+            <div class="comment">
+                <div class="comment-header ">
+                    <time class="comment-header" datetime="{{comment.comments_datetime }}">
+                        {{ comment.comments_datetime }}
+                    </time>
+                </div>
+                <p>{{ comment.comments_text }}</p>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

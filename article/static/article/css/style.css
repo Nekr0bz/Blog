@@ -25,7 +25,7 @@ a.navbar-brand{
 }
 
 a.article{
-    border-top: 1px dotted #7c949f;
+    border-bottom: 1px dotted #7c949f;
     display: flex;
     flex-wrap: wrap;
     padding-bottom: 30px;
@@ -103,6 +103,51 @@ p.article-content{
     font-size: 17px;
     line-height: 30.005px;
     color: #757575;
+}
+
+div.article-detail + footer{
+    position: absolute;
+}
+
+div.article-detail div.article-header{
+    text-align: right;
+}
+
+div.article-detail h2.article-content{
+    text-align: center;
+}
+
+div.article-detail p.article-content{
+    color: #333;
+    padding-top: 20px;
+}
+
+hr.article-detail{
+    border: 0;
+    height: 1px;
+    background: #333;
+    background-image: linear-gradient(to right, #ccc, #333, #ccc);
+    margin-bottom: 30px;
+}
+
+time.comment-header{
+    font-family: Roboto,sans-serif;
+    font-weight: 500;
+    color: #546e7a;
+    font-size: 12px;
+    line-height: 1em;
+    position: relative;
+}
+
+div.comment-header{
+    width: 100%;
+    position: relative;
+    margin-bottom: 10px;
+}
+
+div.comment{
+    border-bottom: 1px dotted #7c949f;
+    margin-bottom: 20px;
 }
 
 
