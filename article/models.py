@@ -1,4 +1,3 @@
-from django.utils import timezone
 from django.db import models
 
 display_text = lambda text, l: text if len(text) <= l else text[:l]+'...'

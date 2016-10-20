@@ -60,8 +60,8 @@
                                   </li>
                             </ul>
                             <ul class="nav navbar-nav navbar-right">
-                                <li><a href="#">Войти</a></li>
-                                <li><a href="#">Регистрация</a></li>
+                                <li><a href="{% url 'loginsys:login' %}">Войти</a></li>
+                                <li><a href="{% url 'loginsys:register' %}">Регистрация</a></li>
                             </ul>
                             <form class="navbar-form navbar-right">
                                 <input type="text" class="form-control" placeholder="Поиск...">
@@ -74,7 +74,7 @@
 
         <!-- Content ================================================= -->
             {% block content %}{% endblock %}
-            <!--TODO: {% block auth %}{% endblock %} -->
+            {% block auth %}{% endblock %}
 
         <!-- Footer ================================================== -->
 
