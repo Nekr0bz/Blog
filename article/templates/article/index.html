@@ -19,11 +19,11 @@
                     <p>
                         <a href="{% url 'article:article_add_like' article.id  %}">
                             <img src="{% static 'article/img/like.png' %}" width="25px" height="22">
-                            {{ article.article_likes }}
+                            <span class="rate">{{ article.article_likes }}</span>
                         </a>
                         <a href="{% url 'article:article_add_dislike' article.id %}">
                             <img src="{% static 'article/img/dislike.png' %}" width="25px" height="22">
-                            {{ article.article_dislikes }}
+                            <span class="rate">{{ article.article_dislikes }}</span>
                         </a>
                     </p>
                 </div>
