@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 display_text = lambda text, l: text if len(text) <= l else text[:l]+'...'
 
@@ -6,6 +7,7 @@ class Article (models.Model):
     class Meta:
         db_table = 'article'
 
+    article_user = models.ForeignKey(User)
     article_title = models.CharField('Заголовок', max_length=200)
     article_text = models.TextField('Текст')
     article_datetime = models.DateTimeField('Дата и время')
@@ -26,6 +28,7 @@ class Comments (models.Model):
         db_table = 'comments'
 
     comments_article = models.ForeignKey(Article)
+    comments_user = models.ForeignKey(User)
     comments_text = models.CharField('Текст', max_length=200)
     comments_likes = models.IntegerField('Количество лайков', default=0)
     comments_dislikes = models.IntegerField('Количество дизлайков', default=0)

@@ -5,7 +5,7 @@
         <div class="article-detail">
             <div class="article-header ">
                 <time class="article-header" datetime="{{ article.article_datetime }}">
-                    {{ article.article_datetime }}
+                    {{ article.article_datetime }} {{ article.article_user.username }}
                 </time>
             </div>
             <div>
@@ -30,7 +30,7 @@
             <div class="comment">
                 <div class="comment-header ">
                     <time class="comment-header" datetime="{{comment.comments_datetime }}">
-                        {{ comment.comments_datetime }}
+                        {{ comment.comments_datetime }} {{ comment.comments_user }}
                     </time>
                 </div>
                 <p>{{ comment.comments_text }}</p>

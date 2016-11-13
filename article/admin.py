@@ -9,6 +9,7 @@ class CommentsInline (admin.TabularInline):
 
 class ArticleAdmin(admin.ModelAdmin):
     fieldsets = [
+        (None,                          {'fields': ['article_user']}),
         (None,                          {'fields': ['article_title']}),
         (None,                          {'fields': ['article_text']}),
         (None,                          {'fields': ['article_datetime']}),

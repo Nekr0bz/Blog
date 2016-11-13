@@ -40,7 +40,6 @@ def register(request):
         username = authPOST['username']
         mail = authPOST['mail']
         password1 = authPOST['password1']
-        ret_msg = ''
 
         try:
             User.objects.create_user(username, mail, password1)

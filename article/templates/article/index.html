@@ -7,7 +7,8 @@
                 <a href="{% url 'article:detail' article.id %}" class="article">
                     <div class="article-header">
                         <time class="article-header" datetime="{{ article.article_datetime }}">
-                            {{ article.article_datetime }}
+                            <!-- TODO: изменить дизайн имени пользователя -->
+                            {{ article.article_datetime }} {{ article.article_user.username }}
                         </time>
                     </div>
                     <div>
