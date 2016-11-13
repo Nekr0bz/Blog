@@ -3,9 +3,13 @@ from django.utils import timezone
 
 from .models import Article, Comments
 
-
+#TODO: придумать что выводить когда ничего не найдено
 def index(request):
     list_article = Article.objects.filter(article_datetime__lte=timezone.now()).order_by('-article_datetime')
+    if request.GET:
+        find = list_article.filter(article_title__icontains=request.GET['find'])
+        if (find):
+            list_article = find
     context = {'articles': list_article}
     return render(request, 'article/index.html', context)
 

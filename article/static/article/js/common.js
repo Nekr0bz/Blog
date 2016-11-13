@@ -8,8 +8,8 @@
 
         setUpListeners: function () {
             $('.showForm').on('click', app.showAuthModal);
-            $('form').on('submit', app.submitForm);
-            $('form').on('keydown', 'input', app.removeError);
+            $('.auth_form').on('submit', app.submitForm);
+            $('.auth_form').on('keydown', 'input', app.removeError);
             $('#modalAuth').on('show.bs.modal', app.hideAuthModalClickOur);
             $('.closeForm').on('click', app.hideAuthModal);
         },
