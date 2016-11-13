@@ -3,6 +3,7 @@ from django.utils import timezone
 
 from .models import Article, Comments
 
+
 def index(request):
     list_article = Article.objects.filter(article_datetime__lte=timezone.now()).order_by('-article_datetime')
     context = {'articles': list_article}

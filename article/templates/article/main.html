@@ -29,9 +29,9 @@
     </head>
     <body>
         <!-- ModalAuth ============================================== -->
-        <!--     TODO: Добавить кнопку закрытия формы
-                 TODO: Изменять сили полей при не правильном вводе
-                 TODO: обдумать тултипы (в смартфонах их е видно)     -->
+        <!--
+                 TODO: обдумать тултипы (в смартфонах их е видно)
+                                                                      -->
 
         <div class="modal fade" id="modalAuth" role="dialog">
             <div class="login-area">
@@ -62,7 +62,7 @@
                                 <div id="register" class="tab-pane">
                                     <div class="login-inner">
                                         <div class="title">
-                                            <h1>Регистрация</h1>
+                                            <h1 id="h1_reg">Регистрация</h1>
                                         </div>
                                         <div class="login-form">
                                             <form action="{% url 'loginsys:register' %}" method="post">
@@ -75,10 +75,10 @@
                                                         <input type="email" name="mail" placeholder="Почта" id="mail">
                                                     </label>
                                                     <label class="pass">
-                                                        <input type="password" name="passsword" placeholder="Пароль" id="password">
+                                                        <input type="password" name="password1" placeholder="Пароль" id="password1">
                                                     </label>
                                                     <label class="pass">
-                                                        <input type="password" name="passsword" placeholder="Повторите пароль" id="password">
+                                                        <input type="password" name="password2" placeholder="Повторите пароль" id="password2">
                                                     </label>
                                                 </div>
                                                 <button type="submit" class="form-btn">Зарегестрироваться</button>
@@ -92,7 +92,7 @@
                                 <div id="login" class="tab-pane">
                                     <div class="login-inner">
                                         <div class="title">
-                                            <h1>Вход</h1>
+                                            <h1 id="h1_log">Вход</h1>
                                         </div>
                                         <div class="login-form">
                                             <form action="{% url 'loginsys:login' %}" method="post">
@@ -102,7 +102,7 @@
                                                         <input type="text" name="username" placeholder="Логин" id="username">
                                                     </label>
                                                     <label class="pass">
-                                                        <input type="password" name="passsword" placeholder="Пароль" id="password">
+                                                        <input type="password" name="password" placeholder="Пароль" id="password">
                                                     </label>
                                                 </div>
                                                 <button type="submit" class="form-btn">Войти</button>
@@ -144,15 +144,19 @@
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                                         aria-haspopup="true" aria-expanded="false">Темы<span class="caret"></span></a>
                                     <ul class="dropdown-menu">
-                                        <li><a href="#">Тема 1</a></li>
+                                        <li><a href="{% url 'loginsys:logout' %}">Тема 1</a></li>
                                         <li><a href="#">Тема 2</a></li>
                                         <li><a href="#">Тема 3</a></li>
                                     </ul>
                                   </li>
                             </ul>
                             <ul class="nav navbar-nav navbar-right">
-                                <li><a href="{% url 'loginsys:register' %}">Регистрация</a></li>
-                                <li><a href="{% url 'loginsys:login' %}">Войти</a></li>
+                                {% if user.is_authenticated %}
+                                    <li><a href="{% url 'loginsys:logout' %}">Выйти ({{ user.username }})</a></li>
+                                {% else %}
+                                    <li><a class="showForm" href="#ModalAuthRegister">Регистрация</a></li>
+                                    <li><a class="showForm" href="#ModalAuthLogin">Войти</a></li>
+                                {% endif %}
                             </ul>
                             <form class="navbar-form navbar-right">
                                 <input type="text" class="form-control" placeholder="Поиск...">
