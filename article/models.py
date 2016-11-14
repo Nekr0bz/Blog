@@ -37,3 +37,9 @@ class Comments (models.Model):
     def __str__(self):
         text = self.comments_text
         return text if len(text) <= 50 else text[:50]+'...'
+
+class Rate (models.Model):
+    rate_user = models.ForeignKey(User)
+    rate_vote = models.IntegerField(default=0)
+    rate_table_id = models.IntegerField()
+    rate_table_type = models.CharField(max_length=50)

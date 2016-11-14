@@ -164,22 +164,31 @@ span.rate{
     color: #337ab7;;
 }
 
+p.lock a{
+    pointer-events: none;
+}
+
 input.error {
     border-bottom-color: red;
 }
 
 input[class='error']::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-  color: #d06a6a;
+    color: #d06a6a;
 }
 input[class='error']::-moz-placeholder { /* Firefox 19+ */
-  color: #d06a6a;
+    color: #d06a6a;
 }
 input[class='error']:-ms-input-placeholder { /* IE 10+ */
-  color: #d06a6a;
+    color: #d06a6a;
 }
 input[class='error']:-moz-placeholder { /* Firefox 18- */
-  color: #d06a6a;
+    color: #d06a6a;
 }
+
+.active span{
+    color: red;
+}
+
 
 
 

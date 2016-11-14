@@ -1,5 +1,7 @@
 {% extends 'article/main.html' %}
 {% load staticfiles %}
+{% load article_extras %}
+
 {% block content %}
     <div class="container">
         {% for article in articles %}
@@ -17,12 +19,16 @@
                     </div>
                 </a>
                 <div class="article-footer">
-                    <p>
-                        <a href="{% url 'article:article_add_like' article.id  %}">
+                    {% if user.is_authenticated %}
+                    <p class="article">
+                    {% else %}
+                    <p class="article lock">
+                    {% endif %}
+                        <a class="rate like {% rate_active user 'article' article.id 1 %}" href="{{ article.id  }}">
                             <img src="{% static 'article/img/like.png' %}" width="25px" height="22">
                             <span class="rate">{{ article.article_likes }}</span>
                         </a>
-                        <a href="{% url 'article:article_add_dislike' article.id %}">
+                        <a class="rate dislike {% rate_active user 'article' article.id -1 %}" href="{{ article.id  }}">
                             <img src="{% static 'article/img/dislike.png' %}" width="25px" height="22">
                             <span class="rate">{{ article.article_dislikes }}</span>
                         </a>

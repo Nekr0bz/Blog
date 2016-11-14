@@ -3,7 +3,7 @@
 	var app = {
 
 		initialize : function () {
-			app.setUpListeners();
+            app.setUpListeners();
 		},
 
         setUpListeners: function () {
@@ -12,6 +12,7 @@
             $('.auth_form').on('keydown', 'input', app.removeError);
             $('#modalAuth').on('show.bs.modal', app.hideAuthModalClickOur);
             $('.closeForm').on('click', app.hideAuthModal);
+            $('a.rate').on('click', app.rateControl);
         },
 
         showAuthModal: function (e) {
@@ -197,6 +198,37 @@
             e.preventDefault();
             $('#modalAuth').modal('hide');
             /*TODO: вынести в объявление, не делать отдельную функци.*/
+        },
+
+        rateControl: function (e) {
+            e.preventDefault();
+            var ithis = $(this),
+                vote = ithis[0].classList[1],
+                p = ithis.parent()[0],
+                table_type = p.classList[0],
+                table_id = ithis.attr('href'),
+                other_class= vote == 'dislike'? 'like' : 'dislike',
+                other_rate = $(p).children('a.'+other_class);
+
+            $(p).addClass('lock');
+
+            $.ajax({
+                'url':'/ratecontrol/',
+                type: 'GET',
+                'data':{
+                    'vote':vote,
+                    'table_type':table_type,
+                    'table_id':table_id
+                }
+            }).done(function (msg) {
+                msg = msg.split('/');
+                $(ithis).children('span').html(msg[0]);
+                $(ithis).toggleClass('active');
+                $(other_rate).children('span').html(msg[1]);
+                $(other_rate).removeClass('active');
+            }).always(function () {
+                $(p).removeClass('lock');
+            });
         }
 
 	};

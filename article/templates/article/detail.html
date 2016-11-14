@@ -1,5 +1,7 @@
 {% extends 'article/main.html' %}
 {% load staticfiles %}
+{% load article_extras %}
+
 {% block content %}
     <div class="container article-detail">
         <div class="article-detail">
@@ -13,12 +15,16 @@
                 <p class="article-content">{{ article.article_text}}</p>
             </div>
             <div class="article-footer">
-                <p>
-                    <a href="{% url 'article:article_add_like' article.id %}">
+                {% if user.is_authenticated %}
+                <p class="article">
+                {% else %}
+                <p class="article lock">
+                {% endif %}
+                    <a class="rate like {% rate_active user 'article' article.id 1 %}" href="{{ article.id }}">
                         <img src="{% static 'article/img/like.png' %}" width="25px" height="22">
                         <span class="rate">{{ article.article_likes }}</span>
                     </a>
-                    <a href="{% url 'article:article_add_dislike' article.id %}">
+                    <a class="rate dislike {% rate_active user 'article' article.id -1 %}" href="{{ article.id }}">
                         <img src="{% static 'article/img/dislike.png' %}" width="25px" height="22">
                         <span class="rate">{{ article.article_dislikes }}</span>
                     </a>
@@ -35,12 +41,16 @@
                 </div>
                 <p>{{ comment.comments_text }}</p>
                 <div class="article-footer">
-                    <p>
-                        <a href="{% url 'article:comment_add_like' comment.id %}">
+                    {% if user.is_authenticated %}
+                    <p class="comment">
+                    {% else %}
+                    <p class="comment lock">
+                    {% endif %}
+                        <a class="rate like {% rate_active user 'comment' comment.id 1 %}" href="{{ comment.id }}">
                             <img src="{% static 'article/img/like.png' %}" width="25px" height="22">
                             <span class="rate">{{ comment.comments_likes }}</span>
                         </a>
-                        <a href="{% url 'article:comment_add_dislike' comment.id %}">
+                        <a class="rate dislike {% rate_active user 'comment' comment.id -1 %}" href="{{ comment.id }}">
                             <img src="{% static 'article/img/dislike.png' %}" width="25px" height="22">
                             <span class="rate">{{ comment.comments_dislikes }}</span>
                         </a>
