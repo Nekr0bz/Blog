@@ -1,7 +1,8 @@
-from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse
+from django.shortcuts import render, redirect, get_object_or_404
+from django.http import HttpResponse, Http404
 from django.utils import timezone
 from django.core.exceptions import ObjectDoesNotExist
+
 
 from .models import Article, Comments
 
@@ -70,6 +71,22 @@ def rate_control(request):
         Obj.save()
         msg = str(Obj.__dict__[active_rate])+'/'+str(Obj.__dict__[other_rate])
         return HttpResponse(msg)
+    else:
+        raise Http404()
 
+def addcomment(request, article_id):
+    if request.POST:
+        #TODO: валидация текста
+        comment_text = request.POST['comment_text']
+        article = get_object_or_404(Article, id=article_id)
+        article.comments_set.create(
+            comments_user_id=request.user.id,
+            comments_text=comment_text,
+            comments_datetime=timezone.now()
+        )
+        path = request.META['HTTP_REFERER']
+        return redirect(path)
+    else:
+        raise Http404()
 
 

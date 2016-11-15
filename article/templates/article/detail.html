@@ -3,6 +3,7 @@
 {% load article_extras %}
 
 {% block content %}
+    <!--Запись================================-->
     <div class="container article-detail">
         <div class="article-detail">
             <div class="article-header ">
@@ -32,6 +33,19 @@
             </div>
             <hr class="article-detail">
         </div>
+        <!--Добавить комментарий=================-->
+        <!--TODO: обдумать комменты!-->
+        {% if user.is_authenticated %}
+            <div class="addcomment">
+                <form action='{% url 'article:addcomment' article.id %}' method="post">{% csrf_token %}
+                    <textarea data-autoresize rows="2" placeholder="Написать комментарий..." name="comment_text"></textarea>
+                    <div align="right">
+                        <button class="btn btn-sm" type="submit">Добавить комментарий</button>
+                    </div>
+                </form>
+            </div>
+        {% endif %}
+        <!--Комментарии==========================-->
         {% for comment in article.comments_set.all %}
             <div class="comment">
                 <div class="comment-header ">

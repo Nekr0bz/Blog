@@ -109,10 +109,6 @@ p.article-content{
     color: #757575;
 }
 
-div.article-detail + footer{
-    position: absolute;
-}
-
 div.article-detail div.article-header{
     text-align: right;
 }
@@ -187,6 +183,31 @@ input[class='error']:-moz-placeholder { /* Firefox 18- */
 
 .active span{
     color: red;
+}
+
+textarea{
+    -webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	width: 100%;
+    resize: none;
+}
+
+textarea:focus{
+    outline: none !important;
+    border:1px solid black;
+}
+
+.addcomment button{
+    background-color: #333;
+    color: white;
+    border: 1px solid black;
+
+}
+
+.addcomment button:hover{
+    background-color: rgba(51, 51, 51, 0.91);;
+    color: white;
 }
 
 
