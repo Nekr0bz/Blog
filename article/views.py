@@ -32,8 +32,8 @@ def rate_control(request):
         vote = request.GET['vote']
         num_vote = 1 if vote == 'like' else -1
         Obj = (Article if (table_type == 'article') else Comments).objects.get(id=table_id)
-
         other = 'like' if vote == 'dislike' else 'dislike'
+
         for k in Obj.__dict__.keys():
             if ('_'+vote in k):
                 active_rate = k
@@ -58,6 +58,7 @@ def rate_control(request):
                 rate_obj.rate_vote = num_vote
                 Obj.__dict__[active_rate] += 1
                 Obj.__dict__[other_rate] -= 1
+
         except ObjectDoesNotExist:
             # ещё не оценивал
             rate_obj = request.user.rate_set.create(
@@ -74,9 +75,25 @@ def rate_control(request):
     else:
         raise Http404()
 
-def addcomment(request, article_id):
+#TODO: валидация текста!
+def addarticle(request):
+    if request.user.is_authenticated() == False:
+        raise Http404()
+
     if request.POST:
-        #TODO: валидация текста
+        article_title = request.POST['article_title']
+        article_text = request.POST['article_text']
+        request.user.article_set.create(
+            article_title=article_title,
+            article_text=article_text,
+            article_datetime=timezone.now()
+        )
+        return redirect('/')
+    else:
+        return render(request, 'article/addarticle.html')
+
+def addcomment(request, article_id):
+    if request.POST and request.user.is_authenticated():
         comment_text = request.POST['comment_text']
         article = get_object_or_404(Article, id=article_id)
         article.comments_set.create(
@@ -88,5 +105,3 @@ def addcomment(request, article_id):
         return redirect(path)
     else:
         raise Http404()
-
-

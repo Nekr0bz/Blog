@@ -4,7 +4,7 @@
 
 		initialize : function () {
             app.setUpListeners();
-            app.autoresizeTextarea();
+                app.autoresizeTextarea();
 		},
 
         autoresizeTextarea: function () {

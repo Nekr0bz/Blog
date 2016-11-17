@@ -122,7 +122,6 @@
         <!-- Navigation bar ================================================== -->
         <!-- TODO: ПЕРЕДЕЛАТЬ АДАПТИВ!
              TODO: ПЕРЕДАЛТЬ ТОП БАР -->
-        
         <header class="navbar" id="top">
             <div class="container">
                 <nav class="navbar navbar-default">
@@ -152,6 +151,7 @@
                             </ul>
                             <ul class="nav navbar-nav navbar-right">
                                 {% if user.is_authenticated %}
+                                    <li><a href="{% url 'article:add_article' %}">Написать</a></li>
                                     <li><a href="{% url 'loginsys:logout' %}">Выйти ({{ user.username }})</a></li>
                                 {% else %}
                                     <li><a class="showForm" href="#ModalAuthRegister">Регистрация</a></li>

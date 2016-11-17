@@ -37,10 +37,12 @@
         <!--TODO: обдумать комменты!-->
         {% if user.is_authenticated %}
             <div class="addcomment">
-                <form action='{% url 'article:addcomment' article.id %}' method="post">{% csrf_token %}
+                <form action='{% url 'article:add_comment' article.id %}' method="post">{% csrf_token %}
                     <textarea data-autoresize rows="2" placeholder="Написать комментарий..." name="comment_text"></textarea>
                     <div align="right">
-                        <button class="btn btn-sm" type="submit">Добавить комментарий</button>
+                        <button class="add btn " type="submit">
+                            <span>Добавить комментарий</span>
+                        </button>
                     </div>
                 </form>
             </div>

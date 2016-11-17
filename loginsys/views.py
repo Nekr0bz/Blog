@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from django.db.utils import IntegrityError
 from django.http import HttpResponse, Http404
 
+from article.views import index
 
 def login(request):
     if request.POST:
@@ -28,9 +29,8 @@ def login(request):
 
 
 def logout(request):
-    path = request.META['HTTP_REFERER']
     auth.logout(request)
-    return redirect(path)
+    return redirect('/')
 
 
 def register(request):

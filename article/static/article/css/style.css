@@ -196,22 +196,74 @@ textarea{
 textarea:focus{
     outline: none !important;
     border:1px solid black;
+    box-shadow: 0 0 3px black;
+    outline-color: black;
 }
 
-.addcomment button{
+button.add{
     background-color: #333;
     color: white;
     border: 1px solid black;
 
 }
 
-.addcomment button:hover{
+button.add:hover{
     background-color: rgba(51, 51, 51, 0.91);;
     color: white;
 }
 
+button.add:focus{
+    outline-color: #333;
+}
 
+.add span{
+    font-family: Roboto,sans-serif;
+    text-transform: uppercase;
+}
 
+.addcomment{
+    margin-bottom: 20px;
+}
+
+.addcomment button{
+    font-size: 12px;
+}
+
+.addarticle input{
+    padding-left: 5px;
+    width: 100%;
+    color: #333;
+    font-family: Roboto Slab,Lucida Bright,Verdana,Georgia,serif;
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.addarticle input:focus{
+    border:1px solid black;
+    box-shadow: 0 0 3px black;
+    outline-color: black;
+}
+
+.addarticle textarea{
+    padding-left: 5px;
+    font-family: Roboto Slab,Lucida Bright,Verdana,Georgia,serif;
+    font-weight: 300;
+    font-size: 17px;
+    line-height: 30.005px;
+    color: #333;
+}
+
+.addarticle h1{
+    margin-bottom: 20px;
+}
+
+.addarticle .item{
+    margin-bottom: 20px;
+}
+
+.addarticle button{
+    font-size: 14px;
+}
 
 
 

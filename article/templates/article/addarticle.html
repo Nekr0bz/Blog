@@ -1,0 +1,26 @@
+{% extends 'article/main.html' %}
+{% load staticfiles %}
+
+{% block content %}
+<div class="container">
+    <form action="{% url 'article:add_article' %}" method="post">{% csrf_token %}
+        <div class="addarticle">
+            <h1 align="center">Новая запись</h1>
+            <div class="item">
+                <label for="article_title">Заголовок:</label><br>
+                <input type="text" name="article_title">
+            </div>
+            <div class="item">
+                <label for="article_text">Текст:</label>
+                <textarea name="article_text" rows="15" data-autoresize></textarea>
+            </div>
+            <div class="item" align="right">
+                <button type="submit" class="add btn btn-lg">
+                    <span>Создать запись</span>
+                </button>
+            </div>
+        </div>
+        <hr class="article-detail">
+    </form>
+</div>
+{% endblock %}
