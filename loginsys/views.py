@@ -6,8 +6,6 @@ from django.contrib.auth.models import User
 from django.db.utils import IntegrityError
 from django.http import HttpResponse, Http404
 
-from article.views import index
-
 def login(request):
     if request.POST:
         authPOST = ast.literal_eval(request.POST['dataAuth'])

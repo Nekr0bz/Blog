@@ -20,8 +20,12 @@ def index(request):
     return render(request, 'article/index.html', context)
 
 def detail(request, article_id):
+    article = get_object_or_404(Article, id=article_id)
+    list_comments = article.comments_set.all().\
+        filter(comments_datetime__lte=timezone.now()).order_by('-comments_datetime')
     context = {
-        'article': get_object_or_404(Article, id=article_id)
+        'article': article,
+        'comments': list_comments
     }
     return render(request, 'article/detail.html', context)
 
@@ -76,7 +80,7 @@ def rate_control(request):
         raise Http404()
 
 #TODO: валидация текста!
-def addarticle(request):
+def add_article(request):
     if request.user.is_authenticated() == False:
         raise Http404()
 
@@ -92,7 +96,7 @@ def addarticle(request):
     else:
         return render(request, 'article/addarticle.html')
 
-def addcomment(request, article_id):
+def add_comment(request, article_id):
     if request.POST and request.user.is_authenticated():
         comment_text = request.POST['comment_text']
         article = get_object_or_404(Article, id=article_id)
@@ -105,3 +109,15 @@ def addcomment(request, article_id):
         return redirect(path)
     else:
         raise Http404()
+
+def del_comment(request, comment_id):
+    if request.user.is_authenticated():
+        try:
+            comment = request.user.comments_set.get(id=comment_id)
+            comment.delete()
+            path = request.META['HTTP_REFERER']
+            return redirect(path)
+        except ObjectDoesNotExist:
+            raise Http404
+    else:
+        raise Http404

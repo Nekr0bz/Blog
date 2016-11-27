@@ -22,11 +22,11 @@
                 <p class="article lock">
                 {% endif %}
                     <a class="rate like {% rate_active user 'article' article.id 1 %}" href="{{ article.id }}">
-                        <img src="{% static 'article/img/like.png' %}" width="25px" height="22">
+                        <span class="glyphicon glyphicon glyphicon-thumbs-up"></span>
                         <span class="rate">{{ article.article_likes }}</span>
                     </a>
                     <a class="rate dislike {% rate_active user 'article' article.id -1 %}" href="{{ article.id }}">
-                        <img src="{% static 'article/img/dislike.png' %}" width="25px" height="22">
+                        <span class="glyphicon glyphicon glyphicon-thumbs-down"></span>
                         <span class="rate">{{ article.article_dislikes }}</span>
                     </a>
                 </p>
@@ -48,12 +48,25 @@
             </div>
         {% endif %}
         <!--Комментарии==========================-->
-        {% for comment in article.comments_set.all %}
+        {% for comment in comments %}
             <div class="comment">
-                <div class="comment-header ">
-                    <time class="comment-header" datetime="{{comment.comments_datetime }}">
-                        {{ comment.comments_datetime }} {{ comment.comments_user }}
-                    </time>
+                {% if user.is_authenticated %}
+                <div class="dropdovn {% comment_owned user comment.id %}" >
+                    <button class="three_dots dropdown-toggle" data-toggle="dropdown">
+                        <span>&#8942;</span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Редактировать</a></li>
+                        <li><a href="{% url 'article:del_comment' comment.id %}">Удалить</a></li>
+                    </ul>
+                </div>
+                {% endif %}
+                <div class="comment-header">
+                    <div>
+                        <time class="comment-header" datetime="{{comment.comments_datetime }}">
+                            {{ comment.comments_datetime }} {{ comment.comments_user }}
+                        </time>
+                    </div>
                 </div>
                 <p>{{ comment.comments_text }}</p>
                 <div class="article-footer">
@@ -63,11 +76,11 @@
                     <p class="comment lock">
                     {% endif %}
                         <a class="rate like {% rate_active user 'comment' comment.id 1 %}" href="{{ comment.id }}">
-                            <img src="{% static 'article/img/like.png' %}" width="25px" height="22">
+                            <span class="glyphicon glyphicon glyphicon-thumbs-up"></span>
                             <span class="rate">{{ comment.comments_likes }}</span>
                         </a>
                         <a class="rate dislike {% rate_active user 'comment' comment.id -1 %}" href="{{ comment.id }}">
-                            <img src="{% static 'article/img/dislike.png' %}" width="25px" height="22">
+                            <span class="glyphicon glyphicon glyphicon-thumbs-down"></span>
                             <span class="rate">{{ comment.comments_dislikes }}</span>
                         </a>
                     </p>

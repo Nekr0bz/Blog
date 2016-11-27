@@ -4,7 +4,7 @@
 
 		initialize : function () {
             app.setUpListeners();
-                app.autoresizeTextarea();
+            app.autoresizeTextarea();
 		},
 
         autoresizeTextarea: function () {
@@ -234,9 +234,9 @@
                 }
             }).done(function (msg) {
                 msg = msg.split('/');
-                $(ithis).children('span').html(msg[0]);
+                $(ithis).children('span[class=rate]').html(msg[0]);
                 $(ithis).toggleClass('active');
-                $(other_rate).children('span').html(msg[1]);
+                $(other_rate).children('span[class=rate]').html(msg[1]);
                 $(other_rate).removeClass('active');
             }).always(function () {
                 $(p).removeClass('lock');
