@@ -3,23 +3,23 @@
 
 {% block content %}
 <div class="container">
-    <form action="{% url 'article:add_article' %}" method="post">{% csrf_token %}
+    <form action="{% url 'article:upd_article' article.id %}" method="post">{% csrf_token %}
         <div class="addarticle">
-            <h1 align="center">Новая запись</h1>
+            <h1 align="center">Изменить запись</h1>
             <div class="item">
                 <label for="article_title">Заголовок:</label><br>
-                <input type="text" name="article_title" required>
+                <input type="text" name="article_title" value="{{ article.article_title }}">
             </div>
             <div class="item">
                 <label for="article_text">Текст:</label>
-                <textarea name="article_text" rows="15" data-autoresize required></textarea>
+                <textarea name="article_text" rows="15" required data-autoresize>{{ article.article_text }}</textarea>
             </div>
             <div class="item" align="right">
                 <button class="add btn btn-lg">
-                    <a href="{% url 'article:index' %}"><span>Отменить</span></a>
+                    <a href="{% url 'article:detail' article.id %}"><span>Отменить</span></a>
                 </button>
                 <button type="submit" class="add btn btn-lg">
-                    <span>Создать запись</span>
+                    <span>Изменить запись</span>
                 </button>
             </div>
         </div>

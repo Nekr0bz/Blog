@@ -123,7 +123,24 @@ def del_article(request, article_id):
         raise Http404
 
 def upd_article(request, article_id):
-    pass
+    if request.user.is_authenticated():
+        try:
+            article = request.user.article_set.get(id=article_id)
+            if request.POST:
+                article.article_title = request.POST['article_title']
+                article.article_text = request.POST['article_text']
+                article.save()
+                return redirect('/'+article_id+'/')
+            else:
+                context = {
+                    'article': article
+                }
+                return render(request, 'article/updarticle.html', context)
+
+        except ObjectDoesNotExist:
+            raise Http404
+    else:
+        raise Http404
 
 def add_comment(request, article_id):
     if request.POST and request.user.is_authenticated():
@@ -166,8 +183,8 @@ def upd_comment(request, comment_id):
             article_id = comment.comments_article
 
             for rate_obj in Rate.objects.filter(
-                    rate_table_type='comment',
-                    rate_table_id=comment_id,
+                rate_table_type='comment',
+                rate_table_id=comment_id,
             ):
                 rate_obj.delete()
 
