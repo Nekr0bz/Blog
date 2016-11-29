@@ -15,14 +15,3 @@ def rate_active(user, table_type, table_id, vote):
             return 'active'
         except ObjectDoesNotExist:
             return None
-
-@register.simple_tag
-def comment_owned(user, comment_id):
-    if (user.is_authenticated()):
-        try:
-            user.comments_set.get(id=comment_id)
-            return None
-        except ObjectDoesNotExist:
-            return 'hidden'
-    else:
-        return 'hidden'

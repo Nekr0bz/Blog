@@ -21,11 +21,19 @@ def index(request):
 
 def detail(request, article_id):
     article = get_object_or_404(Article, id=article_id)
-    list_comments = article.comments_set.all().\
+    comments = article.comments_set.all().\
         filter(comments_datetime__lte=timezone.now()).order_by('-comments_datetime')
+
+    user_comments = user_articles = []
+    if request.user.is_authenticated():
+        user_comments = [i.id for i in request.user.comments_set.all()]
+        user_articles = [i.id for i in request.user.article_set.all()]
+
     context = {
         'article': article,
-        'comments': list_comments
+        'comments': comments,
+        'user_comments': user_comments,
+        'user_articles': user_articles
     }
     return render(request, 'article/detail.html', context)
 
@@ -117,6 +125,17 @@ def del_comment(request, comment_id):
             comment.delete()
             path = request.META['HTTP_REFERER']
             return redirect(path)
+        except ObjectDoesNotExist:
+            raise Http404
+    else:
+        raise Http404
+
+def del_article(request, article_id):
+    if request.user.is_authenticated():
+        try:
+            article = request.user.article_set.get(id=article_id)
+            article.delete()
+            return redirect('/')
         except ObjectDoesNotExist:
             raise Http404
     else:

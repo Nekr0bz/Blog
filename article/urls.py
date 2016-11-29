@@ -8,4 +8,5 @@ urlpatterns = [
     url(r'^addarticle/$', views.add_article, name='add_article'),
     url(r'^addcomment/(?P<article_id>[0-9]+)/$', views.add_comment, name='add_comment'),
     url(r'^delcomment/(?P<comment_id>[0-9]+)/$', views.del_comment, name='del_comment'),
+    url(r'^delarticle/(?P<article_id>[0-9]+)/$', views.del_article, name='del_article'),
 ]

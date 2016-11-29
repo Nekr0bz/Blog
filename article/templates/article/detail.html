@@ -29,6 +29,16 @@
                         <span class="glyphicon glyphicon glyphicon-thumbs-down"></span>
                         <span class="rate">{{ article.article_dislikes }}</span>
                     </a>
+                    {% if user.is_authenticated and article.id in user_articles%}
+                        <span class="btns">
+                            <button class="add btn btn-sm">
+                                <a href=""><span>Редактировать</span></a>
+                            </button>
+                            <button class="add btn btn-sm">
+                                <a href="{% url 'article:del_article' article.id %}"><span>Удалить</span></a>
+                            </button>
+                        </span>
+                    {% endif %}
                 </p>
             </div>
             <hr class="article-detail">
@@ -40,7 +50,7 @@
                 <form action='{% url 'article:add_comment' article.id %}' method="post">{% csrf_token %}
                     <textarea data-autoresize rows="2" placeholder="Написать комментарий..." name="comment_text"></textarea>
                     <div align="right">
-                        <button class="add btn " type="submit">
+                        <button class="add btn" type="submit">
                             <span>Добавить комментарий</span>
                         </button>
                     </div>
@@ -50,8 +60,8 @@
         <!--Комментарии==========================-->
         {% for comment in comments %}
             <div class="comment">
-                {% if user.is_authenticated %}
-                <div class="dropdovn {% comment_owned user comment.id %}" >
+                {% if user.is_authenticated and comment.id in user_comments%}
+                <div class="dropdovn " >
                     <button class="three_dots dropdown-toggle" data-toggle="dropdown">
                         <span>&#8942;</span>
                     </button>
