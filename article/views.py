@@ -4,7 +4,7 @@ from django.utils import timezone
 from django.core.exceptions import ObjectDoesNotExist
 
 
-from .models import Article, Comments
+from .models import Article, Comments, Rate
 
 #TODO: придумать что выводить когда ничего не найдено
 def index(request):
@@ -104,6 +104,27 @@ def add_article(request):
     else:
         return render(request, 'article/addarticle.html')
 
+def del_article(request, article_id):
+    if request.user.is_authenticated():
+        try:
+            article = request.user.article_set.get(id=article_id)
+
+            for rate_obj in Rate.objects.filter(
+                    rate_table_type='article',
+                    rate_table_id=article_id,
+            ):
+                rate_obj.delete()
+
+            article.delete()
+            return redirect('/')
+        except ObjectDoesNotExist:
+            raise Http404
+    else:
+        raise Http404
+
+def upd_article(request, article_id):
+    pass
+
 def add_comment(request, article_id):
     if request.POST and request.user.is_authenticated():
         comment_text = request.POST['comment_text']
@@ -122,6 +143,13 @@ def del_comment(request, comment_id):
     if request.user.is_authenticated():
         try:
             comment = request.user.comments_set.get(id=comment_id)
+
+            for rate_obj in Rate.objects.filter(
+                    rate_table_type='comment',
+                    rate_table_id=comment_id,
+            ):
+                rate_obj.delete()
+
             comment.delete()
             path = request.META['HTTP_REFERER']
             return redirect(path)
@@ -130,13 +158,30 @@ def del_comment(request, comment_id):
     else:
         raise Http404
 
-def del_article(request, article_id):
-    if request.user.is_authenticated():
+def upd_comment(request, comment_id):
+    user = request.user
+    if request.POST and user.is_authenticated():
         try:
-            article = request.user.article_set.get(id=article_id)
-            article.delete()
-            return redirect('/')
+            comment = user.comments_set.get(id=comment_id)
+            article_id = comment.comments_article
+
+            for rate_obj in Rate.objects.filter(
+                    rate_table_type='comment',
+                    rate_table_id=comment_id,
+            ):
+                rate_obj.delete()
+
+            comment.delete()
+            new_text = request.POST['comment_text']
+            user.comments_set.create(
+                comments_article=article_id,
+                comments_text=new_text,
+                comments_datetime=timezone.now()
+            )
+            path = request.META['HTTP_REFERER']
+            return redirect(path)
         except ObjectDoesNotExist:
             raise Http404
     else:
         raise Http404
+

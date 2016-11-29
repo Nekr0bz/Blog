@@ -25,6 +25,8 @@
             $('#modalAuth').on('show.bs.modal', app.hideAuthModalClickOur);
             $('.closeForm').on('click', app.hideAuthModal);
             $('a.rate').on('click', app.rateControl);
+            $('a.updComment').on('click', app.updComment);
+            $('div.addcomment button[type=reset]').on('click', app.updResetComment);
         },
 
         showAuthModal: function (e) {
@@ -241,6 +243,25 @@
             }).always(function () {
                 $(p).removeClass('lock');
             });
+        },
+
+        updComment: function (e) {
+            e.preventDefault();
+            var parent_div = $(this).parents('div.comment'),
+                addcomment_div = $(parent_div).next('div.addcomment'),
+                text = $(parent_div).children('p.comment_text').html(),
+                newtext = $(addcomment_div).find('textarea');
+            parent_div.addClass('hidden');
+            newtext.val(text);
+            $(addcomment_div).removeClass('hidden');
+
+        },
+
+        updResetComment: function (e) {
+            var parent_div = $(this).parents('div.addcomment'),
+                comment_div = $(parent_div).prev('div.comment');
+            parent_div.addClass('hidden');
+            $(comment_div).removeClass('hidden');
         }
 
 	};
