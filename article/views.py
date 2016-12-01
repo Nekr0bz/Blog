@@ -8,6 +8,14 @@ from .models import Article, Comments, Rate
 
 # TODO: придумать что выводить когда ничего не найдено
 def index(request):
+    """
+    Формирование списка записей
+
+    :param request: запрос
+    :type request: django.http.HttpRequest
+    :return: передаёт список записей и данные от запроса в index.html
+    :rtype: django.http.HttpResponse
+    """
     list_article = Article.objects.filter(article_datetime__lte=timezone.now()).order_by('-article_datetime')
     if request.GET:
         find = list_article.filter(article_title__icontains=request.GET['find'])
@@ -21,6 +29,16 @@ def index(request):
 
 
 def detail(request, article_id):
+    """
+    Формирование данных о конкретной записи и комментариев к ней
+
+    :param request: запрос
+    :param article_id: ID статьи
+    :type request: django.http.HttpRequest
+    :return: передаёт данные о статье и комментариях в detail.html
+    :rtype: django.http.HttpResponse
+    :raise: django.core.exceptions.ObjectDoesNotExist
+    """
     article = get_object_or_404(Article, id=article_id)
     comments = article.comments_set.all(). \
         filter(comments_datetime__lte=timezone.now()).order_by('-comments_datetime')
@@ -40,6 +58,16 @@ def detail(request, article_id):
 
 
 def rate_control(request):
+    """
+    Обработчик изменения количества лайков и дизлаков
+    у модулей Article и Comments, и изменение данных модуля Rate
+
+    :param request: запрос
+    :type request: django.http.HttpRequest
+    :return: сообщение о количестве лайков и дизлайков оцениваемого обьекта
+    :rtype: django.http.HttpResponse
+    :raise: django.core.exceptions.ObjectDoesNotExist
+    """
     if request.GET:
         table_type = request.GET['table_type']
         table_id = request.GET['table_id']
@@ -92,6 +120,16 @@ def rate_control(request):
 
 # TODO: валидация текста!
 def add_article(request):
+    """
+    Создание новой статьи
+
+    :param request: запрос
+    :type request: django.http.HttpRequest
+    :return: если статья создана, перенаправляет пользователя
+    на главную страницу, иначе - на страницу создания статьи
+
+    :rtype: django.http.HttpResponse или django.http.HttpResponseRedirect
+    """
     if not request.user.is_authenticated():
         raise Http404()
 
@@ -109,9 +147,22 @@ def add_article(request):
 
 
 def del_article(request, article_id):
+    """
+    Удаление статьи и всех записей Comments и Rate,
+    которые ссылались на эту статью
+
+    :param request: запрос
+    :param article_id: ID статьи
+    :type request: django.http.HttpRequest
+    :return: перенаправляет на главную страницу
+    :rtype: django.http.HttpResponseRedirect
+    :raise: django.core.exceptions.ObjectDoesNotExist
+    """
     if request.user.is_authenticated():
         try:
             article = request.user.article_set.get(id=article_id)
+
+            article.comments_set.all().delete()
 
             for rate_obj in Rate.objects.filter(
                     rate_table_type='article',
@@ -128,6 +179,18 @@ def del_article(request, article_id):
 
 
 def upd_article(request, article_id):
+    """
+    Редактирование статьи
+
+    :param request: запрос
+    :param article_id: ID статьи
+    :type request: django.http.HttpRequest
+    :return: если статья изменена, то его перенаправляют на страницу с
+    этой статьёй, иначе - на страницу редактирования статьи
+
+    :rtype: django.http.HttpResponse или django.http.HttpResponseRedirect
+    :raise: django.core.exceptions.ObjectDoesNotExist
+    """
     if request.user.is_authenticated():
         try:
             article = request.user.article_set.get(id=article_id)
@@ -149,6 +212,15 @@ def upd_article(request, article_id):
 
 
 def add_comment(request, article_id):
+    """
+    Создание новго комментраия
+
+    :param request: запрос
+    :param article_id: ID статьи
+    :type request: django.http.HttpRequest
+    :return: обновление страницы
+    :rtype: django.http.HttpResponseRedirect
+    """
     if request.POST and request.user.is_authenticated():
         comment_text = request.POST['comment_text']
         article = get_object_or_404(Article, id=article_id)
@@ -164,6 +236,17 @@ def add_comment(request, article_id):
 
 
 def del_comment(request, comment_id):
+    """
+    Удаление комментария и записей модуля Rate, которые ссылались
+    на этот комментарий
+
+    :param request: запрос
+    :param comment_id: ID комментария
+    :type request: django.http.HttpRequest
+    :return: обновление страницы
+    :rtype: django.http.HttpResponseRedirect
+    :raise: django.core.exceptions.ObjectDoesNotExist
+    """
     if request.user.is_authenticated():
         try:
             comment = request.user.comments_set.get(id=comment_id)
@@ -184,6 +267,17 @@ def del_comment(request, comment_id):
 
 
 def upd_comment(request, comment_id):
+    """
+    Изменение комментария и удаление записей модуля Rate, которые
+    ссылались на этот комментарий
+
+    :param request: запрос
+    :param comment_id: ID комментария
+    :type request: django.http.HttpRequest
+    :return: обновление страницы
+    :rtype: django.http.HttpResponseRedirect
+    :raise: django.core.exceptions.ObjectDoesNotExist
+    """
     user = request.user
     if request.POST and user.is_authenticated():
         try:

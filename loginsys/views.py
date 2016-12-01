@@ -7,6 +7,14 @@ from django.db.utils import IntegrityError
 from django.http import HttpResponse, Http404
 
 def login(request):
+    """
+    Авторизация пользователя
+
+    :param request: запрос
+    :type request: django.http.HttpRequest
+    :return: если авторизация не произошла, возвращает сообщение об ошибке, иначе-'OK'
+    :rtype: django.http.HttpResponse
+    """
     if request.POST:
         authPOST = ast.literal_eval(request.POST['dataAuth'])
 
@@ -27,11 +35,28 @@ def login(request):
 
 
 def logout(request):
+    """
+    Пользователь вышел
+
+    :param request: запрос
+    :type request: django.http.HttpRequest
+    :return: перенаправляет на главную страницу
+    :rtype: django.http.HttpResponseRedirect
+    """
     auth.logout(request)
     return redirect('/')
 
 
 def register(request):
+    """
+    Регистрация пользователя
+
+    :param request: запрос
+    :type request: django.http.HttpRequest
+    :return: если регистрация не произошла, возвращает сообщение об ошибке, иначе-'OK'
+    :rtype: django.http.HttpResponse
+    :raise: django.db.utils.IntegrityError
+    """
     if request.POST:
         authPOST = ast.literal_eval(request.POST['dataAuth'])
 
