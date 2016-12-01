@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal">
+    <data-source name="MySQL - templateBD@localhost" uuid="f6c1c8b5-856e-40a5-a1b5-2d2d8696d6eb">
+      <secret-storage>master_key</secret-storage>
+      <user-name>root</user-name>
+    </data-source>
+    <data-source name="Sqlite (Xerial) - db.sqlite3" uuid="f4216549-6a7b-40a0-a699-96a84e6bbb3f">
+      <secret-storage>master_key</secret-storage>
+      <auth-required>false</auth-required>
+    </data-source>
+  </component>
+</project>

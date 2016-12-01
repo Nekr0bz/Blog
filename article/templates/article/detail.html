@@ -2,6 +2,8 @@
 {% load staticfiles %}
 {% load article_extras %}
 
+{% block title %}{{ article.article_title }}{% endblock %}
+
 {% block content %}
     <!--Запись================================-->
     <div class="container article-detail">

@@ -3,15 +3,15 @@ from django.http import HttpResponse, Http404
 from django.utils import timezone
 from django.core.exceptions import ObjectDoesNotExist
 
-
 from .models import Article, Comments, Rate
 
-#TODO: придумать что выводить когда ничего не найдено
+
+# TODO: придумать что выводить когда ничего не найдено
 def index(request):
     list_article = Article.objects.filter(article_datetime__lte=timezone.now()).order_by('-article_datetime')
     if request.GET:
         find = list_article.filter(article_title__icontains=request.GET['find'])
-        if (find):
+        if find:
             list_article = find
     context = {
         'articles': list_article
@@ -19,9 +19,10 @@ def index(request):
 
     return render(request, 'article/index.html', context)
 
+
 def detail(request, article_id):
     article = get_object_or_404(Article, id=article_id)
-    comments = article.comments_set.all().\
+    comments = article.comments_set.all(). \
         filter(comments_datetime__lte=timezone.now()).order_by('-comments_datetime')
 
     user_comments = user_articles = []
@@ -37,6 +38,7 @@ def detail(request, article_id):
     }
     return render(request, 'article/detail.html', context)
 
+
 def rate_control(request):
     if request.GET:
         table_type = request.GET['table_type']
@@ -47,9 +49,9 @@ def rate_control(request):
         other = 'like' if vote == 'dislike' else 'dislike'
 
         for k in Obj.__dict__.keys():
-            if ('_'+vote in k):
+            if '_' + vote in k:
                 active_rate = k
-            if ('_'+ other in k):
+            if '_' + other in k:
                 other_rate = k
 
         try:
@@ -57,11 +59,11 @@ def rate_control(request):
                 rate_table_type=table_type,
                 rate_table_id=table_id
             )
-            if (rate_obj.rate_vote == 0):
+            if rate_obj.rate_vote == 0:
                 # поставили оценку заного
                 rate_obj.rate_vote = num_vote
                 Obj.__dict__[active_rate] += 1
-            elif (rate_obj.rate_vote == num_vote):
+            elif rate_obj.rate_vote == num_vote:
                 # убрали оценку
                 rate_obj.rate_vote = 0
                 Obj.__dict__[active_rate] -= 1
@@ -82,14 +84,15 @@ def rate_control(request):
 
         rate_obj.save()
         Obj.save()
-        msg = str(Obj.__dict__[active_rate])+'/'+str(Obj.__dict__[other_rate])
+        msg = str(Obj.__dict__[active_rate]) + '/' + str(Obj.__dict__[other_rate])
         return HttpResponse(msg)
     else:
         raise Http404()
 
-#TODO: валидация текста!
+
+# TODO: валидация текста!
 def add_article(request):
-    if request.user.is_authenticated() == False:
+    if not request.user.is_authenticated():
         raise Http404()
 
     if request.POST:
@@ -103,6 +106,7 @@ def add_article(request):
         return redirect('/')
     else:
         return render(request, 'article/addarticle.html')
+
 
 def del_article(request, article_id):
     if request.user.is_authenticated():
@@ -122,6 +126,7 @@ def del_article(request, article_id):
     else:
         raise Http404
 
+
 def upd_article(request, article_id):
     if request.user.is_authenticated():
         try:
@@ -130,7 +135,7 @@ def upd_article(request, article_id):
                 article.article_title = request.POST['article_title']
                 article.article_text = request.POST['article_text']
                 article.save()
-                return redirect('/'+article_id+'/')
+                return redirect('/' + article_id + '/')
             else:
                 context = {
                     'article': article
@@ -141,6 +146,7 @@ def upd_article(request, article_id):
             raise Http404
     else:
         raise Http404
+
 
 def add_comment(request, article_id):
     if request.POST and request.user.is_authenticated():
@@ -155,6 +161,7 @@ def add_comment(request, article_id):
         return redirect(path)
     else:
         raise Http404()
+
 
 def del_comment(request, comment_id):
     if request.user.is_authenticated():
@@ -175,6 +182,7 @@ def del_comment(request, comment_id):
     else:
         raise Http404
 
+
 def upd_comment(request, comment_id):
     user = request.user
     if request.POST and user.is_authenticated():
@@ -183,8 +191,8 @@ def upd_comment(request, comment_id):
             article_id = comment.comments_article
 
             for rate_obj in Rate.objects.filter(
-                rate_table_type='comment',
-                rate_table_id=comment_id,
+                    rate_table_type='comment',
+                    rate_table_id=comment_id,
             ):
                 rate_obj.delete()
 
@@ -201,4 +209,3 @@ def upd_comment(request, comment_id):
             raise Http404
     else:
         raise Http404
-

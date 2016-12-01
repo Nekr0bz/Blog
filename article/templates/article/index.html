@@ -2,6 +2,8 @@
 {% load staticfiles %}
 {% load article_extras %}
 
+{% block title %}Курсовая работа{% endblock %}
+
 {% block content %}
     <div class="container">
     <div class="left"></div>
@@ -26,12 +28,10 @@
                     <p class="article lock">
                     {% endif %}
                         <a class="rate like {% rate_active user 'article' article.id 1 %}" href="{{ article.id  }}">
-                            <!--img src="{% static 'article/img/like.png' %}" width="25px" height="22"-->
                             <span class="glyphicon glyphicon glyphicon-thumbs-up"></span>
                             <span class="rate">{{ article.article_likes }}</span>
                         </a>
                         <a class="rate dislike {% rate_active user 'article' article.id -1 %}" href="{{ article.id  }}">
-                            <!--img src="{% static 'article/img/dislike.png' %}" width="25px" height="22"-->
                             <span class="glyphicon glyphicon glyphicon-thumbs-down"></span>
                             <span class="rate">{{ article.article_dislikes }}</span>
                         </a>

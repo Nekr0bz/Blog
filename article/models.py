@@ -1,9 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-display_text = lambda text, l: text if len(text) <= l else text[:l]+'...'
+display_text = lambda text, l: text if len(text) <= l else text[:l] + '...'
 
-class Article (models.Model):
+
+class Article(models.Model):
+    """
+    Модель записей
+    """
     class Meta:
         db_table = 'article'
 
@@ -15,15 +19,28 @@ class Article (models.Model):
     article_dislikes = models.IntegerField('Количество дизлайков', default=0)
 
     def __str__(self):
+        """
+        Строковое представление объекта
+
+        :return: 50 первых символов текста статьи
+        """
         return display_text(self.article_title, 50)
 
     def view_article_text(self):
+        """
+        Сокращенное представление текста статьи
+
+        :return: 300 первых символов текста статьи
+        """
         return display_text(self.article_text, 300)
 
-    #TODO: article_text не меньше 350 символов!
+        # TODO: article_text не меньше 350 символов!
 
 
-class Comments (models.Model):
+class Comments(models.Model):
+    """
+    Модель комментариев
+    """
     class Meta:
         db_table = 'comments'
 
@@ -35,10 +52,18 @@ class Comments (models.Model):
     comments_datetime = models.DateTimeField('Дата и время')
 
     def __str__(self):
-        text = self.comments_text
-        return text if len(text) <= 50 else text[:50]+'...'
+        """
+        Строковое представление объекта
 
-class Rate (models.Model):
+        :return: 50 первых символов текста комментария
+        """
+        return display_text(self.comments_text, 50)
+
+
+class Rate(models.Model):
+    """
+    Модель оценок
+    """
     rate_user = models.ForeignKey(User)
     rate_vote = models.IntegerField(default=0)
     rate_table_id = models.IntegerField()

@@ -6,7 +6,9 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>main</title>
+        <title>{% block title %}main{% endblock %}</title>
+
+        <link rel="shortcut icon" href="{% static 'article/img/logo.ICO' %}" type="image/x-icon">
 
         <!-- Bootstrap -->
         <link href="{% static 'article/vendors/bootstrap3/css/bootstrap.min.css' %}" rel="stylesheet">
@@ -37,7 +39,7 @@
             <div class="login-area">
                 <div class="bg-image">
                     <div class="login-signup">
-                        <div class="container">
+                        <div class="container" style="padding: 0">
 
                             <div class="login-header">
                                 <div class="row">
@@ -124,7 +126,7 @@
              TODO: ПЕРЕДАЛТЬ ТОП БАР -->
         <header class="navbar" id="top">
             <div class="container">
-                <nav class="navbar navbar-default">
+                <nav class="navbar navbar-inverse">
                     <div class="container-flud">
                         <div class="navbar-header">
                             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
@@ -134,10 +136,10 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                           </button>
-                          <a class="navbar-brand" href="{% url 'article:index' %}">Главная</a>
+                          <a class="navbar-brand" href="{% url 'article:index' %}">Курсовая работа</a>
                         </div>
                         <div id="navbar" class="navbar-collapse collapse">
-                            <ul class="nav navbar-nav">
+                            <!--ul class="nav navbar-nav">
                                 <li><a href="#">Горячее</a></li>
                                 <li class="dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
@@ -147,12 +149,18 @@
                                         <li><a href="#">Тема 2</a></li>
                                         <li><a href="#">Тема 3</a></li>
                                     </ul>
-                                  </li>
-                            </ul>
+                                </li>
+                            </ul-->
                             <ul class="nav navbar-nav navbar-right">
                                 {% if user.is_authenticated %}
-                                    <li><a href="{% url 'article:add_article' %}">Написать</a></li>
-                                    <li><a href="{% url 'loginsys:logout' %}">Выйти ({{ user.username }})</a></li>
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                            aria-haspopup="true" aria-expanded="false">{{ user.username }}<span class="caret"></span></a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{% url 'article:add_article' %}">Добавить запись</a></li>
+                                            <li><a href="{% url 'loginsys:logout' %}">Выйти</a></li>
+                                        </ul>
+                                    </li>
                                 {% else %}
                                     <li><a class="showForm" href="#ModalAuthRegister">Регистрация</a></li>
                                     <li><a class="showForm" href="#ModalAuthLogin">Войти</a></li>
@@ -169,9 +177,8 @@
                 </nav>
             </div>
         </header>
-
         <!-- Content ================================================= -->
-            <div style="min-height: 78.9vh">
+            <div class="content">
                 {% block content %}{% endblock %}
             </div>
 

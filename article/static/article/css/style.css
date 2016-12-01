@@ -3,6 +3,31 @@ html {
     min-height: 100%;
 }
 
+body{
+    background-color: #fafafa;
+}
+
+div.content{
+    min-height: 81vh;
+}
+
+.container{
+    background-color: white;
+}
+
+header.navbar{
+    margin-bottom: 0px;
+    border-bottom-width: 0px;
+}
+
+nav.navbar{
+    border-radius: 0px;
+}
+
+header.navbar div.container{
+    padding: 0;
+}
+
 .myfooter {
     bottom: 0;
     width: 100%;
@@ -13,9 +38,11 @@ html {
     padding-bottom: 25px;
 }
 
-.navbar {
-    top: 5px;
+.myfooter div.container{
+    background-color: #2a2730;
 }
+
+
 
 a.navbar-brand{
     padding-left:30px;
