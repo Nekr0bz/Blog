@@ -1,12 +1,24 @@
+/**
+ * Главная функция, которая вызывается сразу
+ * после загрузки html - файла
+ */
 (function() {
-
+    /**
+     * Главный объект, которые обробатывает события
+     *
+     * @type {{object}}
+     */
 	var app = {
-
+        /**
+         * Вызывает функции при инициализации
+         */
 		initialize : function () {
             app.setUpListeners();
             app.autoresizeTextarea();
 		},
-
+        /**
+         * Автоматическое изменение размера textarea
+         */
         autoresizeTextarea: function () {
             jQuery.each(jQuery('textarea[data-autoresize]'), function() {
                 var offset = this.offsetHeight - this.clientHeight;
@@ -17,7 +29,9 @@
                 jQuery(this).on('keyup input', function() { resizeTextarea(this); }).removeAttr('data-autoresize');
             });
         },
-
+        /**
+         * Контроллер событий
+         */
         setUpListeners: function () {
             $('.showForm').on('click', app.showAuthModal);
             $('.auth_form').on('submit', app.submitForm);
@@ -28,7 +42,11 @@
             $('a.updComment').on('click', app.updComment);
             $('div.addcomment button[type=reset]').on('click', app.updResetComment);
         },
-
+        /**
+         * Отобразить модальное окно входа, регистрации
+         *
+         * @param e вызываемый объест
+         */
         showAuthModal: function (e) {
             e.preventDefault();
             if ($(this).attr('href') === '#ModalAuthRegister')
@@ -36,7 +54,9 @@
             else if($(this).attr('href') === '#ModalAuthLogin')
                 app.showModalLogin();
         },
-
+        /**
+         * Модальное окно открыть в разделе регистрации
+         */
         showModalRegister: function () {
             $('#liLogin').removeClass('active');
             $('#liRegister').addClass('active');
@@ -46,7 +66,9 @@
             $('#register').addClass('fade in active');
             $('#modalAuth').modal();
 		},
-
+        /**
+         * Модальное окно открыть в разделе вохда
+         */
         showModalLogin: function () {
             $('#liRegister').removeClass('active');
             $('#liLogin').addClass('active');
@@ -56,7 +78,12 @@
             $('#login').addClass('fade in active');
             $('#modalAuth').modal();
 		},
-
+        /**
+         * Изменение модального окна входа, регситрации, в зависимости
+         * от корректности введённых данных пользователем
+         *
+         * @param e вызываемый объест
+         */
         submitForm: function (e) {
             e.preventDefault();
 
@@ -116,7 +143,15 @@
             });
 
         },
-
+        /**
+         * Валидация формы
+         *
+         * @param form форма
+         * @param inputs поля значения которых надо проверить
+         * @param action определяет событе: регистрация или авторизация
+         * @param h1 заголовок формы
+         * @returns {boolean}
+         */
         validateForm: function (form, inputs, action, h1) {
             var valid = true;
 
@@ -195,11 +230,19 @@
             }
             return valid;
         },
-
+        /**
+         * Удаляет у объекта класс "error"
+         */
         removeError: function () {
             $(this).tooltip('destroy').removeClass('error');
         },
-
+        /**
+         * Закрытие модального окна регистрации, авторизации
+         * если пользователь нажал левой кнопкой мыши
+         * за границами модального окна
+         *
+         * @param e e вызываемый объест
+         */
         hideAuthModalClickOur: function (e) {
             $(document).click(function (e) {
                 if( $.inArray("login-signup", e.target.classList) === 0)
@@ -207,7 +250,11 @@
             });
 
         },
-
+        /**
+         * Закрытие модального окна регистрации, авторизации
+         *
+         * @param e вызываемый объест
+         */
         hideAuthModal:function (e) {
             e.preventDefault();
             $('#modalAuth').modal('hide');
@@ -244,7 +291,10 @@
                 $(p).removeClass('lock');
             });
         },
-
+        /**
+         * Обновление текста комментария после добавления
+         * @param e вызываемый объект
+         */
         updComment: function (e) {
             e.preventDefault();
             var parent_div = $(this).parents('div.comment'),
@@ -256,8 +306,10 @@
             $(addcomment_div).removeClass('hidden');
 
         },
-
-        updResetComment: function (e) {
+        /**
+         * Отображение поля для изменения комментария
+         */
+        updResetComment: function () {
             var parent_div = $(this).parents('div.addcomment'),
                 comment_div = $(parent_div).prev('div.comment');
             parent_div.addClass('hidden');

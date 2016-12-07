@@ -3,11 +3,18 @@ from .models import Article, Comments
 
 
 class CommentsInline (admin.TabularInline):
+    """
+    Интерфейс администратора позволяет редактировать
+    связанные объекты на одной странице с родительским объектом.
+    """
     model = Comments
     extra = 2
     readonly_fields = ['comments_likes', 'comments_dislikes']
 
 class ArticleAdmin(admin.ModelAdmin):
+    """
+    Отображение модели в интерфейсе администратора
+    """
     fieldsets = [
         (None,                          {'fields': ['article_user']}),
         (None,                          {'fields': ['article_title']}),

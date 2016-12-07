@@ -33,18 +33,19 @@ def login(request):
     else:
         raise Http404()
 
-
+#TODO: обновить скрин для курсовой
 def logout(request):
     """
     Пользователь вышел
 
     :param request: запрос
     :type request: django.http.HttpRequest
-    :return: перенаправляет на главную страницу
+    :return: перенаправляет на ссылающую страницу
     :rtype: django.http.HttpResponseRedirect
     """
     auth.logout(request)
-    return redirect('/')
+    path = request.META['HTTP_REFERER']
+    return redirect(path)
 
 
 def register(request):

@@ -25,7 +25,9 @@
                     {% if user.is_authenticated %}
                     <p class="article">
                     {% else %}
-                    <p class="article lock">
+                    <div>
+                        <p class="article lock">
+                    </div>
                     {% endif %}
                         <a class="rate like {% rate_active user 'article' article.id 1 %}" href="{{ article.id  }}">
                             <span class="glyphicon glyphicon glyphicon-thumbs-up"></span>

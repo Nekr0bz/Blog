@@ -145,11 +145,13 @@ def add_article(request):
     else:
         return render(request, 'article/addarticle.html')
 
-
+#TODO: обновить скрин для курсовой
 def del_article(request, article_id):
     """
-    Удаление статьи и всех записей Comments и Rate,
-    которые ссылались на эту статью
+    Удаление статьи, всех записей Comments,
+    которые ссылались на эту статью и удаление
+    записей Rate которые ссылались на эту статью
+    и её комментарии
 
     :param request: запрос
     :param article_id: ID статьи
@@ -162,7 +164,12 @@ def del_article(request, article_id):
         try:
             article = request.user.article_set.get(id=article_id)
 
-            article.comments_set.all().delete()
+            for comment in article.comments_set.all():
+                Rate.objects.filter(
+                    rate_table_type='comment',
+                    rate_table_id=comment.id
+                ).delete()
+                comment.delete()
 
             for rate_obj in Rate.objects.filter(
                     rate_table_type='article',
