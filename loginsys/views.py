@@ -33,7 +33,6 @@ def login(request):
     else:
         raise Http404()
 
-#TODO: обновить скрин для курсовой
 def logout(request):
     """
     Пользователь вышел
