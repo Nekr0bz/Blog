@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -24,6 +26,9 @@ class Article(models.Model):
 
         :return: 50 первых символов текста статьи
         """
+        return display_text(self.article_title, 50)
+
+    def __unicode__(self):
         return display_text(self.article_title, 50)
 
     def view_article_text(self):
@@ -57,6 +62,9 @@ class Comments(models.Model):
 
         :return: 50 первых символов текста комментария
         """
+        return display_text(self.comments_text, 50)
+
+    def __unicode__(self):
         return display_text(self.comments_text, 50)
 
 
