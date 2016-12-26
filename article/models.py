@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 display_text = lambda text, l: text if len(text) <= l else text[:l] + '...'
 
-
+#TODO: удаление сделать
 class Article(models.Model):
     """
     Модель записей

@@ -147,7 +147,6 @@ def add_article(request):
     else:
         return render(request, 'article/addarticle.html')
 
-#TODO: обновить скрин для курсовой
 def del_article(request, article_id):
     """
     Удаление статьи, всех записей Comments,

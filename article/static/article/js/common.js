@@ -101,7 +101,6 @@
                return $(inputs[i]).attr('name') !== 'csrfmiddlewaretoken';
             });
 
-            /*TODO: Валидацию формы сделать польностью на серве*/
             if( app.validateForm(form, inputs, action, h1) === false) return false;
 
             submitBtn.attr('disabled', 'disabled');
@@ -136,6 +135,10 @@
                         var textError = 'Пользователь с таким логином уже существует!';
                         h1.html(textError).css('color','#e63c3c');
                         $('input[name="username"]').addClass('error');
+                    }
+                    else if (msg == 'error_valid'){
+                        var textError = 'Ошибка!';
+                        h1.html(textError).css('color','#e63c3c');
                     }
                 }
             }).always(function () {
