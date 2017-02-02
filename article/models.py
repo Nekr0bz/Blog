@@ -76,3 +76,4 @@ class Rate(models.Model):
     rate_vote = models.IntegerField(default=0)
     rate_table_id = models.IntegerField()
     rate_table_type = models.CharField(max_length=50)
+    #TODO: сделать наследование рейт

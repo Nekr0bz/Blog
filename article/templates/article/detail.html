@@ -2,7 +2,7 @@
 {% load staticfiles %}
 {% load article_extras %}
 
-{% block title %}{{ article.article_title }}{% endblock %}
+{% block title %}{{ block.super }} - {{ article.article_title }}{% endblock %}
 
 {% block content %}
     <!--Запись================================-->
@@ -15,7 +15,7 @@
             </div>
             <div>
                 <h2 class="article-content">{{ article.article_title }}</h2>
-                <p class="article-content">{{ article.article_text}}</p>
+                <p class="article-content">{{ article.article_text|linebreaksbr}}</p>
             </div>
             <div class="article-footer">
                 {% if user.is_authenticated %}
@@ -80,7 +80,7 @@
                         </time>
                     </div>
                 </div>
-                <p class="comment_text">{{ comment.comments_text }}</p>
+                <p class="comment_text">{{ comment.comments_text|linebreaksbr }}</p>
                 <div class="article-footer">
                     {% if user.is_authenticated %}
                     <p class="comment">

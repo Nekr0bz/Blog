@@ -1,11 +1,11 @@
 {% extends 'article/main.html' %}
 {% load staticfiles %}
 
-{% block title %}Изменить {{ article.article_title }}{% endblock %}
+{% block title %}{{ block.super }} - Изменить{{ article.article_title }}{% endblock %}
 
 {% block content %}
 <div class="container">
-    <form action="{% url 'article:upd_article' article.id %}" method="post">{% csrf_token %}
+    <form method="post">{% csrf_token %}
         <div class="addarticle">
             <h1 align="center">Изменить запись</h1>
             <div class="item">
