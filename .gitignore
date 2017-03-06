@@ -1,0 +1,6 @@
+article/__pycache__/*
+article/migrations
+article/templatetags/__pycache__/*
+db.sqlite3
+loginsys/__pycache__/
+mysite/__pycache__/
