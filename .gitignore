@@ -1,6 +1,5 @@
-article/__pycache__/*
-article/migrations
-article/templatetags/__pycache__/*
+.idea
 db.sqlite3
-loginsys/__pycache__/
-mysite/__pycache__/
+__pycache__
+*.pyc
+*/static/vendors
