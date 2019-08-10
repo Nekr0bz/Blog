@@ -32,3 +32,11 @@ $ python manage.py createsuperuser
 ```sh
 $ python manage.py runserver
 ```
+
+<hr>
+
+# Установка через DOCKER
+```sh
+$ docker-compose up -d db
+$ docker-compose up
+```

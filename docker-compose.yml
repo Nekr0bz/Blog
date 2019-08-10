@@ -1,0 +1,28 @@
+version: '3'
+services:
+
+  web:
+    build: .
+    command: bash -c "python manage.py collectstatic --noinput && python manage.py migrate --noinput && gunicorn mysite.wsgi -b 0.0.0.0:8000"
+    volumes:
+      - .:/code
+    expose:
+      - "8000"
+    depends_on:
+      - db
+
+  db:
+    image: postgres:latest
+    volumes:
+      - ./my_dbdata:/var/lib/postgresql/data
+
+  nginx:
+    image: nginx:latest
+    container_name: ng01
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/code
+      - ./config/nginx:/etc/nginx/conf.d
+    depends_on:
+      - web
