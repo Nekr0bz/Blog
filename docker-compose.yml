@@ -20,9 +20,18 @@ services:
     image: nginx:latest
     container_name: ng01
     ports:
-      - "8000:8000"
+      - "80:8000"
+      - "443:443"
     volumes:
       - .:/code
       - ./config/nginx:/etc/nginx/conf.d
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
     depends_on:
       - web
+
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
